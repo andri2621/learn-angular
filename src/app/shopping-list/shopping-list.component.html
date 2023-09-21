@@ -4,16 +4,18 @@
       (ingredientAdded)="onIngredientAdded($event)"
       (ingredientDelete)="onIngredientDelete()"
       (ingredientClear)="onIngredientClear()"
+      [selected]="selectedItem"
+      [items]="ingredients"
     ></app-shopping-edit>
     <hr />
     <ul class="list-group">
       <a
-      href="#"
-      class="list-group-item"
-      style="cursor: pointer"
-      *ngFor="let ingredient of ingredients"
-      (click)="onClickItem(ingredient)"
-      [ngClass]="{'active': ingredient === selectedItem}"
+        href="#"
+        class="list-group-item"
+        style="cursor: pointer"
+        *ngFor="let ingredient of ingredients"
+        (click)="onClickItem(ingredient)"
+        [ngClass]="{ active: ingredient === selectedItem }"
       >
         {{ ingredient.name }}
         ({{ ingredient.amount }})</a
