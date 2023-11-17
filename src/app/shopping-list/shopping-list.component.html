@@ -9,17 +9,28 @@
     ></app-shopping-edit>
     <hr />
     <ul class="list-group">
-      <a
-        href="#"
+      <li
+        *ngFor="let ingredient of ingredients; let i = index"
         class="list-group-item"
         style="cursor: pointer"
-        *ngFor="let ingredient of ingredients"
-        (click)="onClickItem(ingredient)"
-        [ngClass]="{ active: ingredient === selectedItem }"
       >
-        {{ ingredient.name }}
-        ({{ ingredient.amount }})</a
-      >
+        <a
+          href="#"
+          (click)="onClickItem(ingredient)"
+          style="text-decoration: none"
+          [ngClass]="{ active: ingredient === selectedItem }"
+        >
+          <div>name: {{ ingredient.name }}</div>
+          <div>amount: ({{ ingredient.amount }})</div>
+          <div>status: ({{ ingredient.status }})</div>
+        </a>
+        <button class="btn btn-primary" (click)="onUpdateStatus(i, 'sold')">
+          Change to Sold
+        </button>
+        <button class="btn btn-primary" (click)="onUpdateStatus(i, 'available')">
+          Change to Available
+        </button>
+      </li>
     </ul>
   </div>
 </div>

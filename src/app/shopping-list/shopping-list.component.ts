@@ -1,24 +1,29 @@
 import { Component, OnInit, HostListener, Input } from '@angular/core';
 import { Ingredient } from '../shared/ingredient.model';
+import { LoggingService } from '../logging.service';
+import { IngredientService } from '../ingredient.service';
 
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.scss'],
+  providers: [IngredientService],
 })
 export class ShoppingListComponent implements OnInit {
-  ingredients: Ingredient[] = [
-    new Ingredient('Apples', 5),
-    new Ingredient('Tomatoes', 5),
-  ];
+  ingredients: Ingredient[] = [];
   selectedItem: any;
 
-  constructor() {}
+  constructor(
+    private loggingService: LoggingService,
+    private ingredientService: IngredientService
+  ) {}
 
   // TO MAKE CLEAR THE SELECTED ITEM WHEN CLICK OUTSIDE
   ngOnInit() {
     // Add a click event listener to the document using an arrow function
     document.addEventListener('click', (event) => this.onDocumentClick(event));
+    // provide ingredients data with services
+    this.ingredients = this.ingredientService.ingredients;
   }
 
   ngOnDestroy() {
@@ -42,7 +47,9 @@ export class ShoppingListComponent implements OnInit {
   // ========================================================
 
   onIngredientAdded(ingredient: Ingredient) {
-    this.ingredients.push(ingredient);
+    // this.ingredients.push(ingredient);
+    //! add data ingredient with services
+    this.ingredientService.add(ingredient);
   }
 
   onIngredientClear() {
@@ -51,6 +58,12 @@ export class ShoppingListComponent implements OnInit {
 
   onClickItem(ingredient: Ingredient) {
     this.selectedItem = ingredient; // Set the clicked ingredient
+    this.loggingService.logStatusChange(ingredient); // use logging service
+  }
+
+  onUpdateStatus(id: number, status: string) {
+    this.ingredientService.statusUpdated.emit(status); // emit the status
+    this.ingredientService.updateStatus(id, status);
   }
 
   onIngredientDelete() {

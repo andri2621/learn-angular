@@ -8,6 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { IngredientService } from 'src/app/ingredient.service';
 import { Ingredient } from 'src/app/shared/ingredient.model';
 
 @Component({
@@ -26,7 +27,11 @@ export class ShoppingEditComponent implements OnInit {
   @Input('selected') selectedList: any;
   @Input('items') itemList: any[];
 
-  constructor() {}
+  constructor(private ingredientService: IngredientService) {
+    this.ingredientService.statusUpdated.subscribe((status: string) =>
+      alert('new status: ' + status)
+    );
+  }
 
   ngOnInit(): void {}
 
@@ -44,8 +49,9 @@ export class ShoppingEditComponent implements OnInit {
   onAddItem(form: NgForm) {
     const ingName = form?.value?.itemName;
     const ingAmount = form?.value?.itemAmount;
+    const status = 'available';
 
-    const newIngredient = new Ingredient(ingName, ingAmount);
+    const newIngredient = new Ingredient(ingName, ingAmount, status);
     this.ingredientAdded.emit(newIngredient);
     form.resetForm(); //* Reset the form after successful submission
   }

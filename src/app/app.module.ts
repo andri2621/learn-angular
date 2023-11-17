@@ -13,6 +13,12 @@ import { ShoppingEditComponent } from './shopping-list/shopping-edit/shopping-ed
 import { OddEvenComponent } from './odd-even/odd-even.component';
 import { basicHighlightDirective } from './shared/basic-highlight.directive';
 import { BetterHighlightDirective } from './shared/better-highlight.directive';
+import { UnlessDirective } from './shared/unless.directive';
+import { DropdownDirective } from './shared/dropdown.directive';
+import { LoggingService } from './logging.service';
+import { UsersComponent } from './users/users.component';
+import { ActiveUserComponent } from './users/active-user/active-user.component';
+import { InactiveUserComponent } from './users/inactive-user/inactive-user.component';
 
 @NgModule({
   declarations: [
@@ -27,9 +33,14 @@ import { BetterHighlightDirective } from './shared/better-highlight.directive';
     OddEvenComponent,
     basicHighlightDirective,
     BetterHighlightDirective,
+    UnlessDirective,
+    DropdownDirective,
+    UsersComponent,
+    ActiveUserComponent,
+    InactiveUserComponent,
   ],
   imports: [BrowserModule, FormsModule],
-  providers: [],
+  providers: [LoggingService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
